@@ -1,0 +1,37 @@
+/*---------------------------------------------------------------------------------
+   Header Styles
+---------------------------------------------------------------------------------*/
+
+nav {
+	position: relative;
+	height: 10%;
+	padding: 1em;
+}
+
+nav ul li {
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 1.2em;
+}
+
+nav ul li:first-child {
+	float: left;
+}
+
+nav ul li:last-child {
+	float: right;
+}
+
+nav a {
+
+	color: #fff;
+}
+
+h1 {
+	font-weight: 900;
+	font-size: 3em;
+	padding: 0.8em;
+	color: #fff;
+
+}
+
