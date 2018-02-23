@@ -37,6 +37,7 @@ export default class App extends React.Component {
   };
 
   generateFeedback = (guess) => { 
+  console.log('SecretNumber ===>', this.state.secretNumber);
   let difference = Math.abs(this.state.secretNumber - guess);
   let feedback;
    if(this.state.secretNumber === guess){

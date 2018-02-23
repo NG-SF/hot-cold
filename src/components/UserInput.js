@@ -24,6 +24,13 @@ export default class UserInput extends React.Component {
         return;
       }
 
+let sameNum = this.props.guessList.filter(uGuess => uGuess.userGuess === guess);  
+console.log(sameNum, guess, this.props.guessList);
+    if(sameNum.length > 0) {
+       this.props.errorFeedback('You guessed this number already');
+       return;
+      } 
+
     this.setState({
       currentGuess: guess
     }); 
