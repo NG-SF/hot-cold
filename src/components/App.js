@@ -26,7 +26,7 @@ export default class App extends React.Component {
       isHidden: false
     });
     this.addCount();
-    this.generateFeedback();
+    this.generateFeedback(userGuess);
     this.showUserGuesses();
   };
  
@@ -36,12 +36,10 @@ export default class App extends React.Component {
     });
   };
 
-  generateFeedback = () => {
-    console.log("Secret Number ===>", this.state.secretNumber)
-    console.log("User Number ===>", this.state.userGuess)
-  let difference = Math.abs(this.state.secretNumber - this.state.userGuess);
+  generateFeedback = (guess) => { 
+  let difference = Math.abs(this.state.secretNumber - guess);
   let feedback;
-   if(this.state.secretNumber === this.state.userGuess){
+   if(this.state.secretNumber === guess){
 		  feedback = "You Won!";
       this.restart();
 	  } else if(difference < 10){
@@ -78,7 +76,8 @@ export default class App extends React.Component {
       <section className="game">
         <h2 id="feedback">{this.state.feedback}</h2>
 
-        <UserInput setGuess={this.setGuess} errorFeedback={this.errorFeedback} />
+        <UserInput setGuess={this.setGuess} errorFeedback={this.errorFeedback} 
+                   guessList={this.state.guessList} />
 
         <p>Guess #<span id="count">{this.state.guessCount}</span>!</p>
 
