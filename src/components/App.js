@@ -27,6 +27,7 @@ export default class App extends React.Component {
     });
     this.addCount();
     this.generateFeedback();
+    this.showUserGuesses();
   };
  
   addCount = () => {
@@ -55,8 +56,7 @@ export default class App extends React.Component {
     this.setState({ feedback });
   };
    
-   errorFeedback = (errFeedback) => {
-     const feedback = errFeedback;
+   errorFeedback = (feedback) => {
      this.setState({ feedback });
    };
 
