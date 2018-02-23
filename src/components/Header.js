@@ -21,7 +21,7 @@ export default class Header extends React.Component {
 			<nav> 
 				<ul className="clearfix">
 					<li><a onClick={() => this.toggleHidden(false)} className="what">What ?</a></li>
-					<li><a onClick={() => this.props.toggleGuessBox()} className="new">+ New Game</a></li>
+					<li><a onClick={this.props.restart} className="new">+ New Game</a></li>
 				</ul>
 			</nav>
     {!this.state.isHidden && <Modal closeModal={() => this.toggleHidden(true)} />}   

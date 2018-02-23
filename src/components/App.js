@@ -1,30 +1,92 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Header';
-import GameBox from './GameBox';
+import UserInput from './UserInput';
+import GuessBox from './GuessBox';
 import './App.css';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isHidden: true
+export default class App extends React.Component {
+  state = {
+      isHidden: true,
+      restart: false,
+      secretNumber: Math.floor(Math.random()*100)+1,
+      userGuess: 0,
+      guessCount: 0,
+      guessList: [],
+      feedback: '' || 'Make your Guess!'
     };
-  }
 
-  toggleHidden (value) {
+  showUserGuesses = (value) => {
+    this.setState({ isHidden: value });
+  };
+
+ setGuess = (userGuess) => {
     this.setState({
-      isHidden: value
-    })
-  }
+      userGuess: userGuess,
+      guessList: [...this.state.guessList, { userGuess }],
+      isHidden: false
+    });
+    this.addCount();
+    this.generateFeedback();
+  };
+ 
+  addCount = () => {
+    this.setState((prevState) => {
+       return { guessCount: prevState.guessCount + 1 };
+    });
+  };
+
+  generateFeedback = () => {
+    console.log("Secret Number ===>", this.state.secretNumber)
+    console.log("User Number ===>", this.state.userGuess)
+  let difference = Math.abs(this.state.secretNumber - this.state.userGuess);
+  let feedback;
+   if(this.state.secretNumber === this.state.userGuess){
+		  feedback = "You Won!";
+      this.restart();
+	  } else if(difference < 10){
+		    feedback= "Hot";
+	  } else if(difference < 20 && difference > 9){
+		    feedback= 'Kinda hot';
+	  } else if(difference < 30 && difference > 19){
+		    feedback= 'Less than warm';
+	  } else {
+		    feedback= 'Cold';
+	  }
+    this.setState({ feedback });
+  };
+   
+   errorFeedback = (errFeedback) => {
+     const feedback = errFeedback;
+     this.setState({ feedback });
+   };
+
+  restart = () => {
+    this.setState({ 
+      secretNumber: Math.floor(Math.random()*100)+1,
+      userGuess: 0,
+      guessCount: 0,
+      guessList: [],
+      feedback: '' || 'Make your Guess!'
+      });
+  };
 
   render() {
     return (
-      <div className="App">
-        <Header toggleGuessBox={() => this.toggleHidden(true)} />
-        <GameBox toggleGuessBox={() => this.toggleHidden(false)} />
+    <div className="App">
+        <Header restart={this.restart} />
+
+      <section className="game">
+        <h2 id="feedback">{this.state.feedback}</h2>
+
+        <UserInput setGuess={this.setGuess} errorFeedback={this.errorFeedback} />
+
+        <p>Guess #<span id="count">{this.state.guessCount}</span>!</p>
+
+		    {!this.state.isHidden && <GuessBox  guessList={this.state.guessList} /> } 
+      </section>
       </div>
     );
   }
 }
 
-export default App;
+
